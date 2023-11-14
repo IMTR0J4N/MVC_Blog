@@ -14,7 +14,7 @@
                             Username or Password incorrect
                         </div>
                         <?php
-                    } else if(isset($_GET['login_required']) && isset($_GET['old_path'])) {
+                    } else if(isset($_GET['login_required'])) {
                         ?>
                         <div class="alert alert-danger" role="alert">
                             You need to Log-In for this action
@@ -42,6 +42,8 @@
                 <div class="position-absolute bottom-0 end-0">
                     <span><a class="link-opacity-50-hover" href="/blog/auth/register">s'enregistrer</a></span>
                 </div>
+
+                <?php echo isset($_GET['old_path']) ? "<input type='hidden' name='old_path' value=".$_GET["old_path"].">" : ''?>
             </form>
         </div>
     </div>

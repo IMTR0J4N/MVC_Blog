@@ -59,14 +59,12 @@
 
             if ($user && isset($_POST['old_path'])) {
 
-                $old_path = $_POST['old_path'];
-
                 var_dump($user);
 
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
 
-                header("Location:$old_path");
+                header("Location:".$_POST["old_path"]);
             } else if ($user) {
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
@@ -78,8 +76,9 @@
             }
         }
 
-        static function isLoggedIn () {
-            return isset($_SESSION['id']);
+        public function disconnect(): void {
+            session_reset();
+            $this->render('login');
         }
     }
 ?>

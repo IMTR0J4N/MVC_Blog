@@ -21,7 +21,11 @@
         }
 
         public function create() {
-
+            if(isset($_SESSION['id'])) {
+                $this->render('create');
+            } else {
+                $this->redirectToLoginWithOldPath("/blog/articles/create");
+            }
         }
 
         public function store(array $data) {

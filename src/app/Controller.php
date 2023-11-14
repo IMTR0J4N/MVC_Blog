@@ -7,6 +7,10 @@
  
         }
 
+        public function redirectToLoginWithOldPath(string $oldpath) {
+            header("Location:/blog/auth/login?login_required?old_path=$oldpath");
+        }
+
         public function render(string $file, array $data = []): void {
             extract($data);
 
