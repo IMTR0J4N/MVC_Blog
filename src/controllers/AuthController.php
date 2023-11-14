@@ -43,36 +43,43 @@
 
         public function login(): void {
 
-            if(isset($_SESSION['id'])) session_destroy();
+            if(isset($_SESSION['id']) || isset($_SESSION['username'])) session_destroy();
 
             $this->render('login');
         }
 
         public function doLogin(): void {
+            session_start();
             $this->loadModel('User');
 
-            $username = $_POST['username'];
-            $password = $_POST['password'];
+            $formUsername = $_POST['username'];
+            $formPassword = $_POST['password'];
 
-            if(isset($this->User)) $user = $this->User->findByUsernameAndPassword($username, $password);
+            if(isset($this->User)) $user = $this->User->findByUsernameAndPassword($formUsername, $formPassword);
 
             if ($user && isset($_POST['old_path'])) {
 
                 $old_path = $_POST['old_path'];
 
+                var_dump($user);
+
                 $_SESSION['id'] = $user['id'];
-                $_SESSION['username'] = $username;
+                $_SESSION['username'] = $user['username'];
 
                 header("Location:$old_path");
             } else if ($user) {
                 $_SESSION['id'] = $user['id'];
-                $_SESSION['username'] = $username;
+                $_SESSION['username'] = $user['username'];
 
                 header("Location:/blog/articles");
             } else {
                 $old_path = $_POST['old_path'];
                 $old_path ? header("Location:/blog/auth/login?error?old_path=$old_path") : header("Location:/blog/auth/login?error");
             }
+        }
+
+        static function isLoggedIn () {
+            return isset($_SESSION['id']);
         }
     }
 ?>

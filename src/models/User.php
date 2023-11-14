@@ -21,9 +21,9 @@
             $query->bindParam(1, $username, PDO::PARAM_STR);
             $query->bindParam(2, $password, PDO::PARAM_STR);
 
-            $res = $query->execute();
+            $query->execute();
 
-            return $res;
+            return $query->fetch(PDO::FETCH_ASSOC);
         }
     }
 ?>

@@ -2,6 +2,9 @@
     class ArticlesController extends Controller {
 
         public function index(): void {
+
+            session_start();
+
             $this->loadModel("Article");
 
             if (isset($this->Article)) $articles = $this->Article->getAll();
@@ -17,10 +20,12 @@
             $this->render('index', compact('article'));
         }
 
-        public function create(array $data) {
+        public function create() {
+
+        }
+
+        public function store(array $data) {
             $this->loadModel('Article');
-
-
         }
     }
 ?>
