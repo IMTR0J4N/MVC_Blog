@@ -1,4 +1,11 @@
 <?php
+
+namespace Blog\Models;
+
+use Blog\App\Model;
+use PDO;
+use PDOException;
+
     class User extends Model {
 
         public function __construct() {

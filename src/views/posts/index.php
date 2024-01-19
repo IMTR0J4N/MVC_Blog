@@ -3,27 +3,17 @@
         <h2>Posts</h2>
 
         <main>
-            <?php
-            if (isset($_GET["success_create"])) { ?>
-                <div class="alert alert-success" role="alert">
-                    Article créer avec succès
-                </div>
-            <?php } else if (isset($_GET["error_create"])) { ?>
-                <div class="alert alert-danger" role="alert">
-                    Erreur lors de la création de l'article
-                </div>
-            <?php } ?>
             <div class="d-flex justify-content-around flex-wrap">
 
-            <?php   foreach ($articles as $value) {
-                    $article_id = $value['id'];
-                    $article_img = $value['image'];
+            <?php   foreach ($posts as $value) {
+                    $postId = $value['id'];
+                    $postImg = $value['image'];
                     ?>
 
                     <article class="card mb-3">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img class="img-fluid rounded-start" src="<?php echo "/blog/src/public/" . $value["image"] ?>" style="width: auto; height: 200px;" alt="article illustration"/>
+                                <img class="img-fluid rounded-start" src="<?= "img/$postImg" ?>" style="width: auto; height: 200px;" alt="article illustration"/>
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -39,14 +29,14 @@
                                     <?php
                                     if (isset($_SESSION['id']) && $value['author_id'] === $_SESSION['id']) { ?>
                                         <div class="d-flex flex-row gap-3">
-                                            <form action="<?php echo "/blog/articles/delete.php" ?>" method="POST">
+                                            <form action="<?php echo "/blog/posts/delete.php" ?>" method="POST">
                                                 <button class="btn btn-danger">
                                                     Supprimer
                                                 </button>
                                                 <input type="hidden" name="article_id" value="<?php echo $article_id ?>">
                                                 <input type="hidden" name="article_img" value="<?php echo $article_img ?>">
                                             </form>
-                                            <form action="<?php echo "/blog/articles/edit.php" ?>" method="POST">
+                                            <form action="<?php echo "/blog/posts/edit.php" ?>" method="POST">
                                                 <button class="btn btn-warning">
                                                     Modifier
                                                 </button>

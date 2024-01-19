@@ -1,13 +1,18 @@
 {
-    "name": "imtr0j4n/mvc_blog",
-    "description": "Simple Blog coded with LAMP and using MVC pattern",
-    "type": "project",
-    "license": "MIT",
+    "name": "joshua/mvc_blog",
+    "autoload": {
+        "psr-4": {
+            "Blog\\": "src/"
+        }
+    },
     "authors": [
         {
             "name": "IMTR0J4N",
             "email": "113339445+IMTR0J4N@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-iconv": "*",
+        "ext-pdo": "*"
+    }
 }

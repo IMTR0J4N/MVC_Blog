@@ -1,7 +1,12 @@
 <?php
-    class Article extends Model {
+namespace Blog\Models;
+
+use Blog\App\Model;
+use PDO;
+
+class Post extends Model {
         public function __construct() {
-            $this->table = "articles";
+            $this->table = "posts";
 
             $this->getConnection();
         }

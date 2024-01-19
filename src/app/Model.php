@@ -1,11 +1,17 @@
-<?php 
-    abstract class Model {
-        private $host = '127.0.0.1';
-        private $db_name =  'blog';
-        private $username = 'root';
-        private $password = '';
+<?php
 
-        protected $_connexion;
+namespace Blog\App;
+
+    use PDO;
+    use PDOException;
+
+    abstract class Model {
+
+        private string $host = '127.0.0.1';
+        private string $db_name =  'blog';
+        private string $username = 'root';
+        private string $password = '';
+       protected PDO | null $_connexion;
 
         public $table;
         public $id;
@@ -34,9 +40,7 @@
         public function getAll() {
             $sql = "SELECT * FROM ".$this->table;
 
-            $query = $this->_connexion->query($sql);
-            
-            return $query;
+            return $this->_connexion->query($sql);
         }
     }
 ?>

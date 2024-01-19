@@ -1,26 +1,24 @@
 <?php
+
+namespace Blog\App;
+
     abstract class Controller {
         public function loadModel(string $model) {
-            require_once(ROOT."src/models/".$model.".php");
+            $modelPath = "Blog\Models\\".$model;
 
-            return $this->$model = new $model();
- 
+            return new $modelPath;
         }
 
-        public function redirectToLoginWithOldPath(string $oldpath) {
-            header("Location:/blog/auth/login?login_required?old_path=$oldpath");
-        }
-
-        public function render(string $file, array $data = []): void {
+        public function render(string $path, array $data = []): void {
             extract($data);
 
             ob_start();
 
-            include(ROOT."/src/views/".strtolower(str_replace('Controller', '', get_class($this)))."/".$file.".php");
+            require "../src/Views/$path.php";
 
             $content = ob_get_clean();
 
-            require_once(ROOT.'src/views/layout/default.php');
+            require_once '../src/Views/layout/default.php';
         }
     }
 ?>

@@ -1,4 +1,12 @@
 <?php
+
+namespace Blog\Controllers;
+
+use Blog\App\Controller;
+use Blog\Validator;
+
+use PDOException;
+
     Class AuthController extends Controller {
         public function createUser(string $username, string $password): void {
             try {
@@ -21,10 +29,10 @@
                     $_SESSION['id'] = $id;
                     $_SESSION['username'] = $username;
 
-                    header('Location:/blog/articles/show.php');
+                    header('Location:/blog/posts/show.php');
                 }
             } catch (PDOException $e) {
-                header('Location:/blog/articles/register.php?error');
+                header('Location:/blog/posts/register.php?error');
             }
         }
 
@@ -45,34 +53,37 @@
 
             if(isset($_SESSION['id']) || isset($_SESSION['username'])) session_destroy();
 
-            $this->render('login');
+            $this->render('auth/login');
         }
 
         public function doLogin(): void {
-            session_start();
             $this->loadModel('User');
+
+            $validator = new Validator($_POST);
 
             $formUsername = $_POST['username'];
             $formPassword = $_POST['password'];
 
+            $validator->validate([
+                "username" => ["min:2", "max:20"]
+            ]);
+
             if(isset($this->User)) $user = $this->User->findByUsernameAndPassword($formUsername, $formPassword);
 
-            if ($user && isset($_POST['old_path'])) {
-
-                var_dump($user);
+            if (isset($user) && isset($_POST['redirect'])) {
 
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
 
-                header("Location:".$_POST["old_path"]);
-            } else if ($user) {
+                header("Location:".$_POST["redirect"]);
+            } else if (isset($user)) {
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
 
-                header("Location:/blog/articles");
+                header("Location:/");
             } else {
-                $old_path = $_POST['old_path'];
-                $old_path ? header("Location:/blog/auth/login?error?old_path=$old_path") : header("Location:/blog/auth/login?error");
+                $redirect = $_POST['redirect'];
+                $redirect ? header("Location:/auth/login?error?redirect=$redirect") : header("Location:/auth/login?error");
             }
         }
 

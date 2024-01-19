@@ -2,11 +2,11 @@
         <div class="position-relative d-flex justify-content-center flex-column">
             <h1>Se connecter</h1>
 
-            <form action="/blog/auth/doLogin" method="POST">
+            <form action="/auth/login" method="POST">
 
                 <?php
                 if (isset($_SESSION['id'])) {
-                    header('Location:/blog/articles');
+                    header('Location:/');
                 } else {
                     if (isset($_GET['error'])) {
                         ?>
@@ -32,18 +32,18 @@
                     </div>
                     <button class="btn btn-primary">Se connecter</button>
                     <?php
-                        if(isset($_GET['old_path'])) {
+                        if(isset($_GET['redirect'])) {
                     ?>
-                        <input type="hidden" name="old_path" value="<?php echo $_GET['old_path'];?>">
+                        <input type="hidden" name="old_path" value="<?= $_GET['redirect'] ?>">
                     <?php
                         }
                 }
                 ?>
                 <div class="position-absolute bottom-0 end-0">
-                    <span><a class="link-opacity-50-hover" href="/blog/auth/register">s'enregistrer</a></span>
+                    <span><a class="link-opacity-50-hover" href="/auth/register">s'enregistrer</a></span>
                 </div>
 
-                <?php echo isset($_GET['old_path']) ? "<input type='hidden' name='old_path' value=".$_GET["old_path"].">" : ''?>
+                <?= isset($_GET['old_path']) ? "<input type='hidden' name='old_path' value=".$_GET["old_path"].">" : ''?>
             </form>
         </div>
     </div>
